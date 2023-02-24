@@ -79,7 +79,7 @@ const Sigin = () => {
             <OAuth />
           </form>
         </div>
-      </div> cursor-pointer
+      </div>
     </section>
   );
 };
