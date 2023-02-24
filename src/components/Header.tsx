@@ -35,9 +35,9 @@ const Header = () => {
               border-b-[3px] border-b-transparent cursor-pointer ${pathMathRoute("/offers")
               && "text-black border-b-red-500"}`}>Offers</li>
             <li
-              onClick={() => navigate("/sigin-in")}
+              onClick={() => navigate("/sign-in")}
               className={`py-3 text-sm font-semibold text-gray-400
-              border-b-[3px] border-b-transparent cursor-pointer ${pathMathRoute("/sigin-in")
+              border-b-[3px] border-b-transparent cursor-pointer ${pathMathRoute("/sign-in")
               && "text-black border-b-red-500"}`}>Sigin in</li>
           </ul>
         </div>
