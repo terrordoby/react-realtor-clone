@@ -1,13 +1,32 @@
 /* eslint-disable react/no-unescaped-entities */
-import React, { useState } from "react";
+import React, { FormEvent, useState } from "react";
 import {AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import OAuth from "../components/OAuth";
+import {getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import {toast} from "react-toastify";
 
 const Sigin = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  const navigate = useNavigate();
+
+  async function handleSubmitLogin(e: FormEvent) {
+    e.preventDefault();
+
+    try {
+      const auth = getAuth();
+      const userCredentials = await signInWithEmailAndPassword(auth, email ,password);
+
+      if ( userCredentials.user) {
+        navigate("/");
+      }
+
+    } catch (error) {
+      toast.error("Bad user credentials");
+    }
+  }
 
   return (
     <section>
@@ -18,7 +37,7 @@ const Sigin = () => {
           <img className="w-full rounded-2xl" src="https://images.unsplash.com/flagged/photo-1564767609342-620cb19b2357?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1373&q=80" alt="" />
         </div>
         <div className="md:w-[67%] lg:w-[40%] lg:ml-20">
-          <form action="">
+          <form onSubmit={handleSubmitLogin} action="">
             <div className="mb-6">
               <input
                 className="w-full px-4 py-2 text-xl rounded text-gray-700 bg-white
