@@ -21,7 +21,7 @@ const Header = () => {
       } else {
         setPageState("Sign In");
       }
-    }),[auth];
+    }),[];
   });
 
   return (
