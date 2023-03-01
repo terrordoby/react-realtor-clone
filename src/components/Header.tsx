@@ -1,15 +1,28 @@
-import React from "react";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import React, { useEffect, useState } from "react";
 import {useLocation, useNavigate} from "react-router-dom";
 
 const Header = () => {
+  const [pageState, setPageState] = useState<string>("Sign In");
   const location = useLocation();
   const navigate = useNavigate();
+  const auth = getAuth();
 
   function pathMathRoute(route: string) {
     if(route === location.pathname) {
       return true;
     }
   }
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setPageState("Profile");
+      } else {
+        setPageState("Sign In");
+      }
+    }),[auth];
+  });
 
   return (
     <div className="bg-white border-b shadow-sm sticky top-0 z-50">
@@ -35,10 +48,10 @@ const Header = () => {
               border-b-[3px] border-b-transparent cursor-pointer ${pathMathRoute("/offers")
               && "text-black border-b-red-500"}`}>Offers</li>
             <li
-              onClick={() => navigate("/sign-in")}
+              onClick={() => navigate("/profile")}
               className={`py-3 text-sm font-semibold text-gray-400
               border-b-[3px] border-b-transparent cursor-pointer ${pathMathRoute("/sign-in")
-              && "text-black border-b-red-500"}`}>Sigin in</li>
+              && "text-black border-b-red-500"}`}>{pageState}</li>
           </ul>
         </div>
       </header>
